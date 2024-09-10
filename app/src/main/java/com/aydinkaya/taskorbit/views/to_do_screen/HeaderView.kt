@@ -1,23 +1,20 @@
-package com.aydinkaya.taskorbit.views
+package com.aydinkaya.taskorbit.views.to_do_screen
+
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -36,16 +33,15 @@ fun HeaderView(
     angle: Float,
     backgroundColor: Color
 ) {
-    // Ekran genişliğini almak için LocalConfiguration kullanıyoruz
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
 
     Box(
         modifier = Modifier
-            .fillMaxWidth() // Ekranın tamamını kaplayacak şekilde genişlik
+            .fillMaxWidth()
             .height(350.dp)
-            //.clipToBounds() // Taşan kısımları kesmek için
-            .offset(y = (-150).dp) // Yüksekliği ayarlamak için
+            //.clipToBounds()
+            .offset(y = (-150).dp)
     ) {
         // Background with rotation (rounded rectangle as background)
         Box(
@@ -53,9 +49,8 @@ fun HeaderView(
                 .fillMaxSize()
                 .graphicsLayer {
                     rotationZ = angle
-                    // Rotation sonrası sarı arka planın taşmasını önlemek için scaling ile oynayalım
-                    scaleX = 3.0f // Yatayda daha geniş olmasını sağlıyoruz
-                    scaleY = 1.1f // İhtiyacınıza göre dikey ölçekleme
+                    scaleX = 3.0f
+                    scaleY = 1.1f
                 }
                 .background(backgroundColor)
         )
@@ -63,7 +58,7 @@ fun HeaderView(
 
         // ToDoList Icon
         Image(
-            painter = painterResource(id = R.drawable.todo_list_icon), // Replace with your icon resource
+            painter = painterResource(id = R.drawable.todo_list_icon),
             contentDescription = "ToDo List Icon",
             modifier = Modifier
                 .size(200.dp, 250.dp)
@@ -71,10 +66,6 @@ fun HeaderView(
                 .offset(y = 328.dp),
             contentScale = ContentScale.Fit
         )
-
-
-
-        // Title and Subtitle Text
         Column(
             modifier = Modifier
                 .align(Alignment.TopCenter)
@@ -107,3 +98,4 @@ fun PreviewHeaderView() {
         backgroundColor = Color(0xFFFFA500) // Orange color
     )
 }
+

@@ -9,6 +9,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
@@ -35,24 +36,28 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun TaskOrbitTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    darkTheme: Boolean = isSystemInDarkTheme(), // Dark mode aktif mi?
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    val colors = if (darkTheme) {
+        darkColorScheme(
+            primary = Color(0xFF007AFF),
+            secondary = Color(0xFFF50053),
+            background = Color.Black, // Arka plan siyah olacak
+            surface = Color.DarkGray
+        )
+    } else {
+        lightColorScheme(
+            primary = Color(0xFF007AFF),
+            secondary = Color(0xFFF50053),
+            background = Color.White, // Açık modda beyaz
+            surface = Color.LightGray
+        )
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
+        colorScheme = colors,
+        typography = Typography, // Projenizde tanımlı Typography
         content = content
     )
 }

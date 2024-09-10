@@ -1,8 +1,9 @@
-package com.aydinkaya.taskorbit.views
+package com.aydinkaya.taskorbit.views.to_do_screen
 
+/*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import com.aydinkaya.taskorbit.viewmodel.LoginViewModel
+import com.aydinkaya.taskorbit.viewmodel.other.LoginViewModel
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
@@ -163,3 +164,5 @@ fun LoginView(viewModel: LoginViewModel) {
 fun LoginViewPreview() {
     LoginView(viewModel = LoginViewModel())
 }
+
+ */

@@ -1,10 +1,7 @@
-package com.aydinkaya.taskorbit.viewmodel
-
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+package com.aydinkaya.taskorbit.viewmodel.other
 
 import androidx.compose.runtime.mutableStateOf
+
 import androidx.lifecycle.ViewModel
 
 class LoginViewModel : ViewModel() {

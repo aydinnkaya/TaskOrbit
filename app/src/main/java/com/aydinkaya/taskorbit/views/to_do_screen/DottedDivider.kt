@@ -1,4 +1,4 @@
-package com.aydinkaya.taskorbit.views
+package com.aydinkaya.taskorbit.views.to_do_screen
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth

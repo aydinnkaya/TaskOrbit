@@ -1,5 +1,6 @@
-package com.aydinkaya.taskorbit.views
+package com.aydinkaya.taskorbit.views.to_do_screen
 
+/*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -91,7 +92,7 @@ fun RegisterView(viewModel: RegisterViewModel) {
                 ),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     capitalization = KeyboardCapitalization.Words,
-                    autoCorrect = false
+                   // autoCorrect = false
                 )
             )
         }
@@ -125,7 +126,7 @@ fun RegisterView(viewModel: RegisterViewModel) {
                 ),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     capitalization = KeyboardCapitalization.None,
-                    autoCorrect = false,
+                  //  autoCorrect = false,
                     keyboardType = KeyboardType.Email
                 )
             )
@@ -161,7 +162,7 @@ fun RegisterView(viewModel: RegisterViewModel) {
                 ),
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions.Default.copy(
-                    autoCorrect = false,
+                    //autoCorrect = false,
                     keyboardType = KeyboardType.Password
                 )
             )
@@ -194,3 +195,5 @@ fun RegisterView(viewModel: RegisterViewModel) {
 fun PreviewRegisterView() {
     RegisterView(viewModel = RegisterViewModel())
 }
+
+ */
