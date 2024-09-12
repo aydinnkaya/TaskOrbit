@@ -67,34 +67,39 @@ Ensure you have the following tools installed:
 - [Android Studio](https://developer.android.com/studio)
 - Latest Android SDK and an Emulator or physical device for testing
 
+
 ---
+
 
 ## Database Schema 🗂️
 
-The app uses **Room Database** for local data storage. Here is the schema structure:
+The app uses **Room Database** for local data storage. Below is the schema structure as displayed in the database:
 
-**User Table**:
+### **User Table**:
 
-| Column Name  | Type    |
-|--------------|---------|
-| user_id      | INTEGER |
-| user_name    | TEXT    |
-| user_email   | TEXT (Unique) |
-| user_password| TEXT    |
+| Column Name   | Type    | Notes          |
+|---------------|---------|----------------|
+| `user_id`     | INTEGER | Primary Key    |
+| `user_name`   | TEXT    | User's name    |
+| `user_email`  | TEXT    | Unique         |
+| `user_password` | TEXT  | User's password|
 
-**ToDoItem Table**:
+### **ToDoItem Table**:
 
-| Column Name  | Type    |
-|--------------|---------|
-| id           | INTEGER |
-| user_id      | INTEGER |
-| description  | TEXT    |
-| priority     | TEXT    |
-| date         | TEXT    |
-| time         | TEXT    |
-| is_completed | BOOLEAN |
+| Column Name   | Type    | Notes                    |
+|---------------|---------|--------------------------|
+| `id`          | INTEGER | Primary Key              |
+| `user_id`     | INTEGER | Foreign Key from User    |
+| `description` | TEXT    | Description of the task  |
+| `date`        | TEXT    | Due date for the task    |
+| `time`        | TEXT    | Due time for the task    |
+
+This schema shows the relationship between **User** and **ToDoItem** tables, where the `user_id` in the **ToDoItem** table is a foreign key referring to the `user_id` in the **User** table.
+
 
 ---
+
+
 
 ## How to Use the App 📲
 
