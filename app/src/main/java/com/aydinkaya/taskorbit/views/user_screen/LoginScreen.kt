@@ -54,7 +54,6 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(120.dp))
 
-        // Hata mesajı gösterme
         if (loginError.isNotEmpty()) {
             Text(
                 text = loginError,
@@ -63,7 +62,6 @@ fun LoginScreen(
             )
         }
 
-        // E-posta giriş alanı
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
@@ -87,7 +85,6 @@ fun LoginScreen(
             )
         )
 
-        // Şifre giriş alanı
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
@@ -111,14 +108,13 @@ fun LoginScreen(
             )
         )
 
-        // Şifremi unuttum butonu
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 2.dp),
             horizontalArrangement = Arrangement.End
         ) {
-            TextButton(onClick = { /* Şifre sıfırlama işlemi */ }) {
+            TextButton(onClick = {  }) {
                 Text(
                     text = "Forgot Password?",
                     color = Color(0xFF007AFF)
@@ -126,14 +122,13 @@ fun LoginScreen(
             }
         }
 
-        // Giriş butonu
         Button(
             onClick = {
                 userViewModel.loginUser(email, password) { success, error ->
                     if (success) {
-                        navController.navigate("todoList/${userViewModel.loggedInUser.value?.userId}")  // Başarılı girişte kullanıcı id'si ile yönlendirme
+                        navController.navigate("todoList/${userViewModel.loggedInUser.value?.userId}")
                     } else if (error != null) {
-                        loginError = error  // Hata mesajı ayarlama
+                        loginError = error
                     }
                 }
             },
@@ -168,7 +163,7 @@ fun LoginScreen(
             Text(text = "New around here?")
             TextButton(
                 onClick = {
-                    navController.navigate("register")  // Kayıt ekranına yönlendirme
+                    navController.navigate("register")
                 },
             ) {
                 Text("Create An Account", color = Color(0xFF007AFF))
@@ -176,7 +171,6 @@ fun LoginScreen(
         }
     }
 
-    // Giriş başarılı olursa kullanıcının yönlendirilmesi
     LaunchedEffect(userViewModel.loggedInUser) {
         userViewModel.loggedInUser.observeForever { user ->
             if (user != null) onLoginSuccess(user)

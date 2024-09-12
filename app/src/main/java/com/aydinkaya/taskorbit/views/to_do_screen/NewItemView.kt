@@ -1,18 +1,22 @@
 package com.aydinkaya.taskorbit.views.to_do_screen
 
-
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import com.aydinkaya.taskorbit.data.entity.ToDoItem
 import java.util.*
 
@@ -22,37 +26,36 @@ fun NewItemView(
     userId: Int,
     onSave: (ToDoItem) -> Unit
 ) {
+    // Gradyan renkleri
+    val gradientColors = listOf(
+        Color(0xFFD15B83), // Lime yeşili
+        Color(0xFFAB87EB)  // Açık mor
+    )
+
     var description by remember { mutableStateOf("") }
     val calendar = remember { Calendar.getInstance() }
     val context = LocalContext.current
 
     var date by remember { mutableStateOf(calendar.time) }
-    var time by remember { mutableStateOf(String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))) } // Seçilen saat
+    var time by remember {
+        mutableStateOf(
+            String.format(
+                "%02d:%02d",
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE)
+            )
+        )
+    }
 
-    val datePickerDialog = DatePickerDialog(
-        context,
-        { _, year, month, dayOfMonth ->
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, month)
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            date = calendar.time
-        },
-        calendar.get(Calendar.YEAR),
-        calendar.get(Calendar.MONTH),
-        calendar.get(Calendar.DAY_OF_MONTH)
-    )
+    val datePickerDialog =
+        createDatePickerDialog(context, calendar, onDateSelected = { selectedDate ->
+            date = selectedDate
+        })
 
-    val timePickerDialog = TimePickerDialog(
-        context,
-        { _, hour, minute ->
-            calendar.set(Calendar.HOUR_OF_DAY, hour)
-            calendar.set(Calendar.MINUTE, minute)
-            time = String.format("%02d:%02d", hour, minute)
-        },
-        calendar.get(Calendar.HOUR_OF_DAY),
-        calendar.get(Calendar.MINUTE),
-        true
-    )
+    val timePickerDialog =
+        createTimePickerDialog(context, calendar, onTimeSelected = { selectedTime ->
+            time = selectedTime
+        })
 
     Column(
         modifier = Modifier
@@ -68,7 +71,7 @@ fun NewItemView(
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         OutlinedTextField(
             value = description,
@@ -78,28 +81,40 @@ fun NewItemView(
             maxLines = 3
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
-        Button(onClick = { datePickerDialog.show() }, modifier = Modifier.fillMaxWidth()) {
-            Text(text = "Select Date")
-        }
+        GradientButton(
+            text = "Select Date",
+            gradientColors = gradientColors,
+            onClick = { datePickerDialog.show() }
+        )
 
         val dateFormatter = android.icu.text.SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-        Text("Selected Date: ${dateFormatter.format(date)}", style = MaterialTheme.typography.bodyMedium)
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-
-        Button(onClick = { timePickerDialog.show() }, modifier = Modifier.fillMaxWidth()) {
-            Text(text = "Select Time")
-        }
-
-        Text("Time: $time", style = MaterialTheme.typography.bodyMedium)
+        RoundedText(
+            text = "Selected Date: ${dateFormatter.format(date)}",
+            backgroundColor = Color(0xFFF3E5F5),
+            textColor = Color(0xFF6200EE)
+        )
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Kaydetme butonu
-        Button(
+        GradientButton(
+            text = "Select Time",
+            gradientColors = gradientColors,
+            onClick = { timePickerDialog.show() }
+        )
+
+        RoundedText(
+            text = "Time: $time",
+            backgroundColor = Color(0xFFF3E5F5),
+            textColor = Color(0xFF6200EE)
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        GradientButton(
+            text = "Save",
+            gradientColors = gradientColors,
             onClick = {
                 if (description.isNotEmpty()) {
                     val newItem = ToDoItem(
@@ -111,14 +126,90 @@ fun NewItemView(
                     )
                     onSave(newItem)
                     newItemPresented.value = false
-                } else {
-
                 }
-            },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
-        ) {
-            Text(text = "Save", color = Color.White)
-        }
+            }
+        )
     }
+}
+
+fun createDatePickerDialog(
+    context: android.content.Context,
+    calendar: Calendar,
+    onDateSelected: (Date) -> Unit
+): DatePickerDialog {
+    return DatePickerDialog(
+        context,
+        { _, year, month, dayOfMonth ->
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, month)
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            onDateSelected(calendar.time)
+        },
+        calendar.get(Calendar.YEAR),
+        calendar.get(Calendar.MONTH),
+        calendar.get(Calendar.DAY_OF_MONTH)
+    )
+}
+
+fun createTimePickerDialog(
+    context: android.content.Context,
+    calendar: Calendar,
+    onTimeSelected: (String) -> Unit
+): TimePickerDialog {
+    return TimePickerDialog(
+        context,
+        { _, hour, minute ->
+            calendar.set(Calendar.HOUR_OF_DAY, hour)
+            calendar.set(Calendar.MINUTE, minute)
+            onTimeSelected(String.format("%02d:%02d", hour, minute))
+        },
+        calendar.get(Calendar.HOUR_OF_DAY),
+        calendar.get(Calendar.MINUTE),
+        true
+    )
+}
+
+@Composable
+fun GradientButton(
+    text: String,
+    gradientColors: List<Color>,
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                brush = Brush.horizontalGradient(gradientColors)
+            ),
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
+    ) {
+        Text(text = text, color = Color.White)
+    }
+}
+
+@Composable
+fun RoundedText(
+    text: String,
+    backgroundColor: Color,
+    textColor: Color
+) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.bodyMedium.copy(
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp,
+            letterSpacing = 1.5.sp,
+            color = textColor
+        ),
+        modifier = Modifier
+            .padding(16.dp)
+            .shadow(4.dp, shape = RoundedCornerShape(8.dp))
+            .background(
+                color = backgroundColor,
+                shape = RoundedCornerShape(8.dp)
+            )
+            .padding(16.dp),
+        textAlign = TextAlign.Center
+    )
 }

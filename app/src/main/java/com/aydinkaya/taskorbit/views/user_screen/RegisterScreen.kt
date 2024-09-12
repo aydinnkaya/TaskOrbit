@@ -42,7 +42,6 @@ fun RegisterScreen(userViewModel: UserViewModel, navController: (String) -> Unit
 
     var registrationSuccess by remember { mutableStateOf(false) }
 
-    // LiveData'yı Compose ile observe et
     DisposableEffect(lifecycleOwner) {
         val observer = { success: Boolean ->
             registrationSuccess = success
@@ -58,7 +57,6 @@ fun RegisterScreen(userViewModel: UserViewModel, navController: (String) -> Unit
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Header
         HeaderView(
             title = "Register",
             subtitle = "Start organizing todos",
@@ -70,16 +68,6 @@ fun RegisterScreen(userViewModel: UserViewModel, navController: (String) -> Unit
 
         Spacer(modifier = Modifier.height(120.dp))
 
-        /*
-        // Error Message
-        if (viewModel.errorMessage.isNotEmpty()) {
-            Text(
-                text = viewModel.errorMessage,
-                color = Color.Red
-            )
-        }
-
-         */
 
         Box(
             modifier = Modifier
@@ -88,7 +76,6 @@ fun RegisterScreen(userViewModel: UserViewModel, navController: (String) -> Unit
                 .clip(RoundedCornerShape(10.dp))
                 .background(Color.Gray.copy(alpha = 0.1f))
         ) {
-            // Full Name TextField
             OutlinedTextField(
                 value =name,
                 onValueChange = { name = it },
@@ -246,37 +233,6 @@ fun RegisterScreen(userViewModel: UserViewModel, navController: (String) -> Unit
         Spacer(modifier = Modifier.weight(1f))
     }
 
-
-
-    /*
-    Column {
-        TextField(value = name, onValueChange = { name = it }, label = { Text("Name") })
-        TextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
-        TextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Password") },
-            visualTransformation = PasswordVisualTransformation()
-        )
-        TextField(
-            value = confirmPassword,
-            onValueChange = { confirmPassword = it },
-            label = { Text("Confirm Password") },
-            visualTransformation = PasswordVisualTransformation()
-        )
-
-        Button(onClick = {
-            if (password == confirmPassword) {
-                userViewModel.registerUser(name, email, password)
-            }
-        }) {
-            Text("Register")
-        }
-    }
-
-     */
-
-    // Kayıt başarılı olursa yönlendirme yap
     if (registrationSuccess) {
         LaunchedEffect(Unit) {
             navController("login")

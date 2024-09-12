@@ -6,7 +6,6 @@ import javax.inject.Inject
 
 class UserRepository @Inject constructor(private val userDao: UserDao) {
 
-    // Kullanıcıyı ekleme
     suspend fun insertUser(name: String, email: String, password: String) {
         val user = User(0, name, email, password)
         userDao.insertUser(user)

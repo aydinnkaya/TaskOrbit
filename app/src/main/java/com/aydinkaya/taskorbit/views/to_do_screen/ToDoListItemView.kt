@@ -55,7 +55,7 @@ fun ToDoListItemView(
                 )
             } else {
                 Text(
-                    text = "No date provided",  // Boş ise varsayılan bir mesaj
+                    text = "No date provided",
                     style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray)
                 )
             }
@@ -76,7 +76,7 @@ fun ToDoListItemView(
             IconButtonWithAction(
                 icon = Icons.Default.Delete,
                 contentDescription = "Delete",
-                onClick = { toDoViewModel.deleteToDoItem(item) }  // Silme işlemi
+                onClick = { toDoViewModel.deleteToDoItem(item) }
             )
         }
     }
